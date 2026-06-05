@@ -1,264 +1,328 @@
-// 
-// lib/pages/profile_page.dart
 import 'package:flutter/material.dart';
+import 'package:grad_snap/models/user_model.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import 'login_page.dart';
+import 'select_role_page.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
-
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  String _debugMessage = "Menunggu data...";
 
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
     final user = auth.appUser;
-    final isLoading = auth.isLoading;
 
-    // Debug: Update message based on state
-    if (isLoading) {
-      _debugMessage = "⏳ Sedang memuat data user...";
-    } else if (user != null) {
-      _debugMessage = "✅ Selamat datang, ${user.name}! (Role: ${user.role.displayName})";
-    } else if (auth.firebaseUser != null && user == null) {
-      _debugMessage = "⚠️ Firebase login sukses, tapi data user dari backend belum dimuat";
-    } else {
-      _debugMessage = "❌ Belum login";
-    }
-
-    // Jika belum login, tampilkan halaman login
     if (!auth.isLoggedIn || user == null) {
-      return Scaffold(
-        body: Column(
-          children: [
-            // Debug panel
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              color: Colors.amber.shade100,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "🐛 DEBUG INFO:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(_debugMessage),
-                  if (auth.firebaseUser != null)
-                    Text("Firebase UID: ${auth.firebaseUser!.uid}"),
-                  if (auth.firebaseUser != null)
-                    Text("Firebase Email: ${auth.firebaseUser!.email}"),
-                ],
-              ),
-            ),
-            const Expanded(child: LoginPage()),
-          ],
-        ),
-      );
+      return const LoginPage();
     }
-
-    // Tampilkan pesan selamat datang di dialog
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (user != null && _debugMessage.contains("Selamat datang")) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("🎉 $_debugMessage"),
-            backgroundColor: Colors.green,
-            duration: const Duration(seconds: 3),
-          ),
-        );
-      }
-    });
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
-        backgroundColor: Colors.blue,
+        title: const Text("Profile"),
+        centerTitle: true,
+        backgroundColor: const Color(0xFFD4AF37),
+        foregroundColor: Colors.white,
+        elevation: 0,
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          setState(() {
-            _debugMessage = "🔄 Refreshing data...";
-          });
-          if (user.firebaseUid.isNotEmpty) {
-            await auth.loadUserFromBackend(user.firebaseUid);
-          }
-          setState(() {
-            if (auth.appUser != null) {
-              _debugMessage = "✅ Selamat datang, ${auth.appUser!.name}!";
-            }
-          });
-        },
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              // Debug Panel (untuk testing)
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                color: Colors.blue.shade50,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "🐛 DEBUG INFO:",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(_debugMessage),
-                    const SizedBox(height: 4),
-                    Text("User ID: ${user.id}"),
-                    Text("Firebase UID: ${user.firebaseUid}"),
-                    Text("Role: ${user.role.displayName}"),
-                    Text("Phone: ${user.phone ?? 'Not set'}"),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              // Welcome Card
-              Card(
-                margin: const EdgeInsets.all(16),
-                color: Colors.green.shade50,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      const Icon(Icons.celebration, size: 48, color: Colors.green),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Selamat Datang!",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green.shade800,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Halo ${user.name}, senang bertemu denganmu!",
-                        style: const TextStyle(fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            // Profile Picture
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
                   ),
-                ),
+                ],
               ),
-              // Profile Info
-              CircleAvatar(
+              child: CircleAvatar(
                 radius: 60,
-                backgroundImage: user.photoUrl != null
-                    ? NetworkImage(user.photoUrl!)
-                    : null,
-                child: user.photoUrl == null
+                backgroundImage:
+                    user.photoUrl != null && user.photoUrl!.isNotEmpty
+                        ? NetworkImage(user.photoUrl!)
+                        : null,
+                child: user.photoUrl == null || user.photoUrl!.isEmpty
                     ? Text(
-                        user.name.isNotEmpty ? user.name[0].toUpperCase() : '?',
+                        user.name[0].toUpperCase(),
                         style: const TextStyle(fontSize: 40),
                       )
                     : null,
               ),
-              const SizedBox(height: 16),
-              Text(
-                user.name,
-                style: const TextStyle(
-                  fontSize: 24,
+            ),
+
+            const SizedBox(height: 20),
+
+            // Name
+            Text(
+              user.name,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 8),
+
+            // Email
+            Text(
+              user.email,
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 16,
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            // Role Badge
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 6,
+              ),
+              decoration: BoxDecoration(
+                color: _getRoleColor(user.role).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: _getRoleColor(user.role),
+                  width: 0.5,
+                ),
+              ),
+              child: Text(
+                user.role.displayName,
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  color: _getRoleColor(user.role),
                 ),
               ),
-              const SizedBox(height: 8),
-              Text(
-                user.email,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
+            ),
+
+            const SizedBox(height: 30),
+
+            // Info Card
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
               ),
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade100,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  user.role.displayName,
-                  style: TextStyle(
-                    color: Colors.blue.shade800,
-                    fontWeight: FontWeight.bold,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.person, color: Color(0xFFD4AF37)),
+                    title: const Text("Nama"),
+                    subtitle: Text(user.name),
                   ),
-                ),
+                  const Divider(height: 1, indent: 16, endIndent: 16),
+                  ListTile(
+                    leading: const Icon(Icons.email, color: Color(0xFFD4AF37)),
+                    title: const Text("Email"),
+                    subtitle: Text(user.email),
+                  ),
+                  const Divider(height: 1, indent: 16, endIndent: 16),
+                  ListTile(
+                    leading: const Icon(Icons.phone, color: Color(0xFFD4AF37)),
+                    title: const Text("Nomor HP"),
+                    subtitle: Text(
+                      user.phone ?? "Belum diisi",
+                    ),
+                  ),
+                  const Divider(height: 1, indent: 16, endIndent: 16),
+                  ListTile(
+                    leading: const Icon(Icons.location_on, color: Color(0xFFD4AF37)),
+                    title: const Text("Lokasi"),
+                    subtitle: Text(
+                      user.location ?? "Belum diisi",
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 24),
+            ),
+
+            const SizedBox(height: 16),
+
+            // TOMBOL JADI MUA / PHOTOGRAPHER (hanya untuk customer)
+            if (user.role == UserRole.customer) ...[
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      _buildInfoRow(Icons.person, 'Name', user.name),
-                      const Divider(),
-                      _buildInfoRow(Icons.email, 'Email', user.email),
-                      const Divider(),
-                      _buildInfoRow(Icons.phone, 'Phone', user.phone ?? 'Not set'),
-                      const Divider(),
-                      _buildInfoRow(Icons.location_on, 'Location', user.location ?? 'Not set'),
-                    ],
+                child: ListTile(
+                  leading: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFD4AF37).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.rocket_launch,
+                      color: Color(0xFFD4AF37),
+                      size: 28,
+                    ),
+                  ),
+                  title: const Text(
+                    "Jadi MUA / Photographer",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: const Text(
+                    "Mulai transaksi jual jasa Anda",
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: Colors.grey,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SelectRolePage(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
+
+            // CARD UNTUK VENDOR (MUA/PHOTOGRAPHER) - LANGSUNG TERVERIFIKASI
+            if (user.role == UserRole.mua || user.role == UserRole.photographer) ...[
+              Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ListTile(
+                  leading: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.green.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.verified,
+                      color: Colors.green,
+                      size: 28,
+                    ),
+                  ),
+                  title: const Text(
+                    "Vendor Terverifikasi",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: Text(
+                    "Anda terdaftar sebagai ${user.role.displayName}",
+                    style: const TextStyle(fontSize: 13, color: Colors.green),
+                  ),
+                  trailing: const Icon(
+                    Icons.check_circle,
+                    size: 20,
+                    color: Colors.green,
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
-              ElevatedButton.icon(
-                onPressed: auth.isLoading ? null : () async {
-                  await auth.signOut();
-                  if (mounted) {
-                    Navigator.pushReplacementNamed(context, '/main');
-                  }
-                },
+              const SizedBox(height: 16),
+            ],
+
+            // Admin Card (khusus admin)
+            if (user.role == UserRole.admin) ...[
+              Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ListTile(
+                  leading: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.purple.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.admin_panel_settings,
+                      color: Colors.purple,
+                      size: 28,
+                    ),
+                  ),
+                  title: const Text(
+                    "Administrator",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: const Text(
+                    "Akses penuh ke platform",
+                    style: TextStyle(fontSize: 13, color: Colors.purple),
+                  ),
+                  trailing: const Icon(
+                    Icons.star,
+                    size: 20,
+                    color: Colors.purple,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
+
+            // Logout Button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
                 icon: const Icon(Icons.logout),
-                label: const Text('Logout'),
+                label: const Text("Logout"),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
                   minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
+                onPressed: () async {
+                  await auth.signOut();
+
+                  if (context.mounted) {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      '/main',
+                    );
+                  }
+                },
               ),
-              const SizedBox(height: 24),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          Icon(icon, size: 20, color: Colors.grey.shade600),
-          const SizedBox(width: 12),
-          SizedBox(
-            width: 80,
-            child: Text(
-              label,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          Expanded(
-            child: Text(value),
-          ),
-        ],
-      ),
-    );
+  // Helper function untuk mendapatkan warna role
+  Color _getRoleColor(UserRole role) {
+    switch (role) {
+      case UserRole.customer:
+        return Colors.blue;
+      case UserRole.mua:
+        return Colors.pink;
+      case UserRole.photographer:
+        return Colors.purple;
+      case UserRole.admin:
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
   }
 }

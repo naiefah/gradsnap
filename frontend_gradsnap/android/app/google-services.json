@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "854327117508-25dhh85p2trhvsd6p8fvlabvobqfcib0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.grad_snap",
+            "certificate_hash": "32d59bd0f6907599d676cdb99f41de22322bb901"
+          }
+        },
+        {
           "client_id": "854327117508-08jfa799sbf84bv9o2ac2d4kuu5u8ds1.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "854327117508-08jfa799sbf84bv9o2ac2d4kuu5u8ds1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "854327117508-0u3bfhtetb53qts9ulf7c3h9vrhkag18.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.gradSnap"
+              }
             }
           ]
         }
@@ -66,6 +81,13 @@
             {
               "client_id": "854327117508-08jfa799sbf84bv9o2ac2d4kuu5u8ds1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "854327117508-0u3bfhtetb53qts9ulf7c3h9vrhkag18.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.gradSnap"
+              }
             }
           ]
         }

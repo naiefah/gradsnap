@@ -61,8 +61,18 @@ class User {
   bool get isAdmin => role == UserRole.admin;
 
   factory User.fromJson(Map<String, dynamic> json) {
+    // Konversi id dengan aman
+    int userId;
+    if (json['id'] is int) {
+      userId = json['id'];
+    } else if (json['id'] is String) {
+      userId = int.tryParse(json['id']) ?? 0;
+    } else {
+      userId = 0;
+    }
+
     return User(
-      id: json['id'],
+      id: userId,
       firebaseUid: json['firebase_uid'] ?? '',
       name: json['name'] ?? '',
       email: json['email'] ?? '',

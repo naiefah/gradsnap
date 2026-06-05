@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grad_snap/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
-
-
 
 class BookingDetailPage extends StatefulWidget {
   final Map? mapData;
@@ -46,23 +43,39 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
           title: const Text("Hapus Booking"),
           content: const Text("Yakin ingin menghapus booking ini?"),
           actions: [
-            ElevatedButton(
+            TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: const Text("Batal"),
             ),
             ElevatedButton(
-              onPressed: () {
-                _hapusBooking(widget.mapData!['id_booking']).then((value) {
-                  if (value) {
-                    navigatorKey.currentState!.pushAndRemoveUntil(
-                      MaterialPageRoute(
-                        builder: (context) => const BookingDetailPage(),
-                      ),
-                      (route) => false,
-                    );
-                  }
-                });
+              onPressed: () async {
+                Navigator.of(context).pop(); // Tutup dialog
+                
+                final idBooking = widget.mapData?['id_booking'] ?? '';
+                final success = await _hapusBooking(idBooking);
+                
+                if (success && context.mounted) {
+                  // Tampilkan pesan sukses
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Booking berhasil dihapus"),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                  // Kembali ke halaman sebelumnya
+                  Navigator.pop(context);
+                } else if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Gagal menghapus booking"),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+              ),
               child: const Text("Hapus"),
             ),
           ],
@@ -78,58 +91,90 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Detail Booking"),
-        backgroundColor: const Color.fromARGB(255, 250, 237, 202),
+        backgroundColor: const Color(0xFFD4AF37),
+        foregroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  "Nama: ${data['nama'] ?? '-'}",
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "Tanggal: ${data['tanggal'] ?? '-'}",
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "Layanan: ${data['jenis_layanan'] ?? '-'}",
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "Harga: ${data['harga'] ?? '-'}",
-                  style: const TextStyle(fontSize: 18),
-                ),
+                _buildDetailRow("ID Booking", data['id_booking'] ?? '-'),
+                const Divider(),
+                _buildDetailRow("Nama", data['nama'] ?? '-'),
+                const Divider(),
+                _buildDetailRow("Tanggal", data['tanggal'] ?? '-'),
+                const Divider(),
+                _buildDetailRow("Layanan", data['jenis_layanan'] ?? '-'),
+                const Divider(),
+                _buildDetailRow("Harga", data['harga'] ?? '-'),
+                const Divider(),
+                _buildDetailRow("Status", data['status'] ?? '-'),
                 const SizedBox(height: 30),
-
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton.icon(
                       onPressed: _dialogHapus,
                       icon: const Icon(Icons.delete),
-                      label: const Text("Hapus"),
+                      label: const Text("Hapus Booking"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                      ),
                     ),
                     ElevatedButton.icon(
                       onPressed: () {
-                        navigatorKey.currentState!.pop();
+                        Navigator.pop(context);
                       },
                       icon: const Icon(Icons.arrow_back),
                       label: const Text("Kembali"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey,
+                        foregroundColor: Colors.white,
+                      ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 100,
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
+        ],
       ),
     );
   }
