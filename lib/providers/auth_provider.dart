@@ -12,7 +12,7 @@ class AuthProvider extends ChangeNotifier {
   final firebase_auth.FirebaseAuth _auth = firebase_auth.FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
   
-  static const String BASE_URL = "http://192.168.195.22";
+  static const String BASE_URL = "http://192.168.1.19";
   
   // Keys untuk SharedPreferences
   static const String KEY_USER_DATA = 'user_data';

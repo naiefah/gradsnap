@@ -11,7 +11,7 @@ class ApiService {
   // Gunakan IP dari hasil curl: 192.168.195.22
   // Untuk emulator Android: 10.0.2.2
   // Untuk device fisik: 192.168.195.22 (IP komputer Anda)
-  static const String baseUrl = 'http://192.168.195.22'; // Ganti dengan IP Anda
+  static const String baseUrl = 'http://192.168.1.19'; // Ganti dengan IP Anda
   
   static const String phpBaseUrl = '$baseUrl/gradsnap_backend';
 

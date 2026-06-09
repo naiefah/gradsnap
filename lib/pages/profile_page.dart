@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import 'login_page.dart';
 import 'select_role_page.dart';
+import 'vendor/vendor_dashboard.dart'; // Import dashboard vendor
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -146,6 +147,55 @@ class ProfilePage extends StatelessWidget {
             ),
 
             const SizedBox(height: 16),
+
+            // TOMBOL DASHBOARD VENDOR (untuk MUA/Photographer)
+            if (user.role == UserRole.mua || user.role == UserRole.photographer) ...[
+              Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ListTile(
+                  leading: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFD4AF37).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.dashboard,
+                      color: Color(0xFFD4AF37),
+                      size: 28,
+                    ),
+                  ),
+                  title: const Text(
+                    "Dashboard Vendor",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: const Text(
+                    "Kelola paket & pesanan Anda",
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: Colors.grey,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const VendorDashboard(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
 
             // TOMBOL JADI MUA / PHOTOGRAPHER (hanya untuk customer)
             if (user.role == UserRole.customer) ...[
