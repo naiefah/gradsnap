@@ -1,17 +1,19 @@
+import 'package:flutter/material.dart';
+
 class BookingModel {
   final int id;
   final String customerName;
-  final String customerPhone;        // tambahan: kontak customer
+  final String customerPhone;
   final String serviceName;
-  final String serviceType;           // 'mua' atau 'photographer'
+  final String serviceType;
   final String bookingDate;
-  final String bookingTime;           // tambahan: jam pelaksanaan
-  final String location;              // lokasi acara
-  final String additionalRequest;     // permintaan tambahan dari customer
-  final String? customerNote;         // catatan khusus (optional)
+  final String bookingTime;
+  final String location;
+  final String additionalRequest;
+  final String? customerNote;
   final double totalPrice;
-  final String paymentStatus;         // 'pending', 'paid', 'failed'
-  final String bookingStatus;         // 'pending', 'confirmed', 'completed', 'cancelled'
+  final String paymentStatus;
+  final String bookingStatus;
   final DateTime createdAt;
   final DateTime? updatedAt;
 
@@ -35,20 +37,24 @@ class BookingModel {
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
     return BookingModel(
-      id: json['id'],
-      customerName: json['customer_name'],
-      customerPhone: json['customer_phone'],
-      serviceName: json['service_name'],
-      serviceType: json['service_type'],
-      bookingDate: json['booking_date'],
-      bookingTime: json['booking_time'],
-      location: json['location'],
+      id: json['id'] is String ? int.parse(json['id']) : json['id'],
+      customerName: json['customer_name'] ?? '',
+      customerPhone: json['customer_phone'] ?? '',
+      serviceName: json['service_name'] ?? '',
+      serviceType: json['service_type'] ?? '',
+      bookingDate: json['booking_date'] ?? '',
+      bookingTime: json['booking_time'] ?? '',
+      location: json['location'] ?? '',
       additionalRequest: json['additional_request'] ?? '',
       customerNote: json['customer_note'],
-      totalPrice: (json['total_price'] ?? 0).toDouble(),
+      totalPrice: json['total_price'] is String 
+          ? double.parse(json['total_price']) 
+          : (json['total_price'] ?? 0).toDouble(),
       paymentStatus: json['payment_status'] ?? 'pending',
       bookingStatus: json['booking_status'] ?? 'pending',
-      createdAt: DateTime.parse(json['created_at']),
+      createdAt: json['created_at'] != null 
+          ? DateTime.parse(json['created_at']) 
+          : DateTime.now(),
       updatedAt: json['updated_at'] != null 
           ? DateTime.parse(json['updated_at']) 
           : null,
@@ -70,45 +76,88 @@ class BookingModel {
       'total_price': totalPrice,
       'payment_status': paymentStatus,
       'booking_status': bookingStatus,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt?.toIso8601String(),
     };
   }
 
-  // Copy dengan perubahan field tertentu
-  BookingModel copyWith({
-    int? id,
-    String? customerName,
-    String? customerPhone,
-    String? serviceName,
-    String? serviceType,
-    String? bookingDate,
-    String? bookingTime,
-    String? location,
-    String? additionalRequest,
-    String? customerNote,
-    double? totalPrice,
-    String? paymentStatus,
-    String? bookingStatus,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) {
-    return BookingModel(
-      id: id ?? this.id,
-      customerName: customerName ?? this.customerName,
-      customerPhone: customerPhone ?? this.customerPhone,
-      serviceName: serviceName ?? this.serviceName,
-      serviceType: serviceType ?? this.serviceType,
-      bookingDate: bookingDate ?? this.bookingDate,
-      bookingTime: bookingTime ?? this.bookingTime,
-      location: location ?? this.location,
-      additionalRequest: additionalRequest ?? this.additionalRequest,
-      customerNote: customerNote ?? this.customerNote,
-      totalPrice: totalPrice ?? this.totalPrice,
-      paymentStatus: paymentStatus ?? this.paymentStatus,
-      bookingStatus: bookingStatus ?? this.bookingStatus,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-    );
+  // Getter untuk label service type
+  String get serviceTypeLabel {
+    switch (serviceType) {
+      case 'mua':
+        return 'Makeup Artist';
+      case 'photographer':
+        return 'Photographer';
+      case 'both':
+        return 'MUA & Photographer';
+      default:
+        return serviceType;
+    }
+  }
+
+  // Getter untuk label payment status
+  String get paymentStatusLabel {
+    switch (paymentStatus) {
+      case 'pending':
+        return 'Menunggu Pembayaran';
+      case 'paid':
+        return 'Sudah Dibayar';
+      case 'failed':
+        return 'Pembayaran Gagal';
+      case 'refunded':
+        return 'Dikembalikan';
+      default:
+        return paymentStatus;
+    }
+  }
+
+  // Getter untuk label booking status
+  String get bookingStatusLabel {
+    switch (bookingStatus) {
+      case 'pending':
+        return 'Menunggu Konfirmasi';
+      case 'confirmed':
+        return 'Dikonfirmasi';
+      case 'in_progress':
+        return 'Sedang Berlangsung';
+      case 'completed':
+        return 'Selesai';
+      case 'cancelled':
+        return 'Dibatalkan';
+      default:
+        return bookingStatus;
+    }
+  }
+
+  // Getter untuk color booking status
+  Color get bookingStatusColor {
+    switch (bookingStatus) {
+      case 'pending':
+        return Colors.orange;
+      case 'confirmed':
+        return Colors.blue;
+      case 'in_progress':
+        return Colors.purple;
+      case 'completed':
+        return Colors.green;
+      case 'cancelled':
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  // Getter untuk color payment status
+  Color get paymentStatusColor {
+    switch (paymentStatus) {
+      case 'pending':
+        return Colors.orange;
+      case 'paid':
+        return Colors.green;
+      case 'failed':
+        return Colors.red;
+      case 'refunded':
+        return Colors.blue;
+      default:
+        return Colors.grey;
+    }
   }
 }

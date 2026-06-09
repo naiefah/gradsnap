@@ -74,7 +74,9 @@ class HomeContent extends StatelessWidget {
                         ),
                       ],
                     ),
+
                     const SizedBox(height: 18),
+
                     const Text(
                       "Capture Your\nGraduation Moment",
                       style: TextStyle(
@@ -84,7 +86,9 @@ class HomeContent extends StatelessWidget {
                         height: 1.2,
                       ),
                     ),
+
                     const SizedBox(height: 8),
+
                     const Text(
                       "Temukan MUA & Photographer terbaik di Indramayu",
                       style: TextStyle(
@@ -92,7 +96,9 @@ class HomeContent extends StatelessWidget {
                         fontSize: 11,
                       ),
                     ),
+
                     const SizedBox(height: 18),
+
                     // SEARCH BAR
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -115,8 +121,10 @@ class HomeContent extends StatelessWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 20),
-              // ================= MUA =================
+
+              // ================= POPULAR MUA =================
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
@@ -143,27 +151,31 @@ class HomeContent extends StatelessWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 12),
-              // LIST MUA
+
               SizedBox(
-                height: 210, // Dikecilkan
+                height: 210,
                 child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   children: const [
                     MuaCard(
+                      id: 1,
                       name: "Glow Beauty",
                       location: "Indramayu",
                       price: "Rp 350K",
                     ),
                     SizedBox(width: 10),
                     MuaCard(
+                      id: 2,
                       name: "Beauty Wisuda",
                       location: "Jatibarang",
                       price: "Rp 500K",
                     ),
                     SizedBox(width: 10),
                     MuaCard(
+                      id: 3,
                       name: "Cantika Makeup",
                       location: "Haurgeulis",
                       price: "Rp 450K",
@@ -171,8 +183,10 @@ class HomeContent extends StatelessWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 20),
-              // ================= PHOTOGRAPHER =================
+
+              // ================= POPULAR PHOTOGRAPHER =================
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
@@ -199,27 +213,31 @@ class HomeContent extends StatelessWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 12),
-              // LIST PHOTOGRAPHER
+
               SizedBox(
-                height: 210, // Sama dengan MUA
+                height: 210,
                 child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   children: const [
                     PhotographerCard(
+                      id: 1,
                       name: "Snap Studio",
                       location: "Indramayu",
                       price: "Rp 700K",
                     ),
                     SizedBox(width: 10),
                     PhotographerCard(
+                      id: 2,
                       name: "Wisuda Shoot",
                       location: "Haurgeulis",
                       price: "Rp 450K",
                     ),
                     SizedBox(width: 10),
                     PhotographerCard(
+                      id: 3,
                       name: "Classy Moment",
                       location: "Jatibarang",
                       price: "Rp 600K",
@@ -227,7 +245,8 @@ class HomeContent extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20), // Dikecilkan
+
+              const SizedBox(height: 20),
             ],
           ),
         ),

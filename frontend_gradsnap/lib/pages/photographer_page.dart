@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../widgets/photographer_card.dart';
 
 class PhotographerPage extends StatelessWidget {
@@ -7,16 +6,13 @@ class PhotographerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
       backgroundColor: const Color(0xFFF8F8F8),
 
       appBar: AppBar(
-
         backgroundColor: const Color(0xFFD4AF37),
         elevation: 0,
-
+        centerTitle: true,
         title: const Text(
           "Photographer Indramayu",
           style: TextStyle(
@@ -24,51 +20,30 @@ class PhotographerPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-
-        centerTitle: true,
-
       ),
 
       body: SingleChildScrollView(
-
         child: Column(
-
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
-
             const SizedBox(height: 20),
 
-            // ================= SEARCH =================
-
+            // SEARCH
             Padding(
-
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Container(
-
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                ),
-
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18),
-
                   boxShadow: [
-
                     BoxShadow(
                       color: Colors.black.withOpacity(0.05),
                       blurRadius: 10,
                     ),
-
                   ],
                 ),
-
                 child: const TextField(
-
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     icon: Icon(Icons.search),
@@ -80,231 +55,167 @@ class PhotographerPage extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            // ================= TERDEKAT =================
-
-            buildSectionTitle(
-              "Photographer Terdekat",
-            ),
-
+            // PHOTOGRAPHER TERDEKAT
+            buildSectionTitle("Photographer Terdekat"),
             const SizedBox(height: 15),
 
             SizedBox(
-
               height: 220,
-
               child: ListView(
-
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-
                 scrollDirection: Axis.horizontal,
-
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: const [
-
                   PhotographerCard(
+                    id: 1,
                     name: "Snap Studio",
                     location: "Sindang",
                     price: "Rp 500K",
                   ),
-
                   PhotographerCard(
+                    id: 2,
                     name: "Wisuda Shot",
                     location: "Indramayu",
                     price: "Rp 450K",
                   ),
-
                   PhotographerCard(
+                    id: 3,
                     name: "Classy Moment",
                     location: "Jatibarang",
                     price: "Rp 600K",
                   ),
-
                 ],
               ),
             ),
 
             const SizedBox(height: 25),
 
-            // ================= TERMURAH =================
-
-            buildSectionTitle(
-              "Photographer Termurah",
-            ),
-
+            // PHOTOGRAPHER TERMURAH
+            buildSectionTitle("Photographer Termurah"),
             const SizedBox(height: 15),
 
             SizedBox(
-
               height: 220,
-
               child: ListView(
-
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-
                 scrollDirection: Axis.horizontal,
-
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: const [
-
                   PhotographerCard(
+                    id: 4,
                     name: "Simple Shoot",
                     location: "Indramayu",
                     price: "Rp 250K",
                   ),
-
                   PhotographerCard(
+                    id: 5,
                     name: "Daily Photo",
                     location: "Sindang",
                     price: "Rp 300K",
                   ),
-
                   PhotographerCard(
+                    id: 6,
                     name: "Best Capture",
                     location: "Lohbener",
                     price: "Rp 350K",
                   ),
-
                 ],
               ),
             ),
 
             const SizedBox(height: 25),
 
-            // ================= YEARBOOK =================
-
-            buildSectionTitle(
-              "Photographer Yearbook",
-            ),
-
+            // PHOTOGRAPHER YEARBOOK
+            buildSectionTitle("Photographer Yearbook"),
             const SizedBox(height: 15),
 
             SizedBox(
-
               height: 220,
-
               child: ListView(
-
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-
                 scrollDirection: Axis.horizontal,
-
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: const [
-
                   PhotographerCard(
+                    id: 7,
                     name: "Yearbook Studio",
                     location: "Karangampel",
                     price: "Rp 750K",
                   ),
-
                   PhotographerCard(
+                    id: 8,
                     name: "Memory Capture",
                     location: "Jatibarang",
                     price: "Rp 700K",
                   ),
-
                   PhotographerCard(
+                    id: 9,
                     name: "Golden Shoot",
                     location: "Indramayu",
                     price: "Rp 850K",
                   ),
-
                 ],
               ),
             ),
 
             const SizedBox(height: 25),
 
-            // ================= PREWEDDING STYLE =================
-
-            buildSectionTitle(
-              "Prewedding Style",
-            ),
-
+            // PREWEDDING STYLE
+            buildSectionTitle("Prewedding Style"),
             const SizedBox(height: 15),
 
             SizedBox(
-
               height: 220,
-
               child: ListView(
-
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-
                 scrollDirection: Axis.horizontal,
-
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: const [
-
                   PhotographerCard(
+                    id: 10,
                     name: "Elegant Shot",
                     location: "Haurgeulis",
                     price: "Rp 950K",
                   ),
-
                   PhotographerCard(
+                    id: 11,
                     name: "Cinematic Photo",
                     location: "Sindang",
                     price: "Rp 1.2JT",
                   ),
-
                   PhotographerCard(
+                    id: 12,
                     name: "Luxury Moment",
                     location: "Indramayu",
                     price: "Rp 1JT",
                   ),
-
                 ],
               ),
             ),
 
             const SizedBox(height: 40),
-
           ],
         ),
       ),
     );
   }
 
-  Widget buildSectionTitle(
-    String title,
-  ) {
-
+  Widget buildSectionTitle(String title) {
     return Padding(
-
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
-
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
-
-        mainAxisAlignment:
-            MainAxisAlignment.spaceBetween,
-
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
           Text(
             title,
-
             style: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
           ),
-
           const Text(
             "See All",
-
             style: TextStyle(
               color: Color(0xFFD4AF37),
               fontWeight: FontWeight.bold,
             ),
           ),
-
         ],
       ),
     );

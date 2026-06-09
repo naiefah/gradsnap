@@ -6,7 +6,9 @@ import 'package:grad_snap/pages/login_page.dart';
 import 'package:grad_snap/pages/history_booking_page.dart';
 import 'package:grad_snap/pages/booking_detail_page.dart';
 import 'package:grad_snap/pages/vendor_catalog_page.dart';
-import 'package:grad_snap/models/user_model.dart'; // IMPORT INI!
+import 'package:grad_snap/pages/booking_page.dart'; // IMPORT BOOKING PAGE
+import 'package:grad_snap/models/user_model.dart';
+import 'package:grad_snap/models/booking_model.dart'; // IMPORT BOOKING MODEL
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -44,6 +46,11 @@ class GradSnapApp extends StatelessWidget {
           fontFamily: 'Poppins',
           primarySwatch: Colors.blue,
           scaffoldBackgroundColor: Colors.white,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color(0xFFD4AF37),
+            foregroundColor: Colors.white,
+            elevation: 0,
+          ),
         ),
         home: const SplashPage(),
         onGenerateRoute: (settings) {
@@ -53,6 +60,28 @@ class GradSnapApp extends StatelessWidget {
             return MaterialPageRoute(
               builder: (context) => BookingDetailPage(
                 mapData: args,
+              ),
+            );
+          }
+          
+          // Handle route dengan BookingModel
+          if (settings.name == '/booking-detail-model') {
+            final booking = settings.arguments as BookingModel;
+            return MaterialPageRoute(
+              builder: (context) => BookingDetailPage(
+                booking: booking,
+              ),
+            );
+          }
+          
+          // Handle route untuk booking page
+          if (settings.name == '/booking-form') {
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => BookingPage(
+                serviceName: args['serviceName'],
+                serviceType: args['serviceType'],
+                price: args['price'],
               ),
             );
           }
