@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "854327117508",
+    "project_id": "gradsnap-d1f21",
+    "storage_bucket": "gradsnap-d1f21.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854327117508:android:90abe96e1d82bee113ab91",
+        "android_client_info": {
+          "package_name": "com.example.grad_snap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854327117508-25dhh85p2trhvsd6p8fvlabvobqfcib0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.grad_snap",
+            "certificate_hash": "32d59bd0f6907599d676cdb99f41de22322bb901"
+          }
+        },
+        {
+          "client_id": "854327117508-08jfa799sbf84bv9o2ac2d4kuu5u8ds1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtdhWjSYyyVYdwByr33LcdRtwSTsc31yc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854327117508-08jfa799sbf84bv9o2ac2d4kuu5u8ds1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "854327117508-0u3bfhtetb53qts9ulf7c3h9vrhkag18.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.gradSnap"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854327117508:android:da7f22839604b71713ab91",
+        "android_client_info": {
+          "package_name": "com.example.gradsnap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854327117508-hkl68013bl8o5636kfk7s9vts756kkdt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gradsnap",
+            "certificate_hash": "32d59bd0f6907599d676cdb99f41de22322bb901"
+          }
+        },
+        {
+          "client_id": "854327117508-08jfa799sbf84bv9o2ac2d4kuu5u8ds1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtdhWjSYyyVYdwByr33LcdRtwSTsc31yc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854327117508-08jfa799sbf84bv9o2ac2d4kuu5u8ds1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "854327117508-0u3bfhtetb53qts9ulf7c3h9vrhkag18.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.gradSnap"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
