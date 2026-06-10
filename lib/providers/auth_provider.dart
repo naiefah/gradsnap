@@ -14,7 +14,6 @@ class AuthProvider extends ChangeNotifier {
   
   static const String BASE_URL = "http://192.168.1.19";
   
-  // Keys untuk SharedPreferences
   static const String KEY_USER_DATA = 'user_data';
   static const String KEY_IS_LOGGED_IN = 'is_logged_in';
   
@@ -27,7 +26,6 @@ class AuthProvider extends ChangeNotifier {
   
   SharedPreferences? _prefs;
 
-  // Getter
   User? get appUser => _appUser;
   firebase_auth.User? get firebaseUser => _firebaseUser;
   firebase_auth.FirebaseAuth get auth => _auth;

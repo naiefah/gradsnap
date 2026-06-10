@@ -10,7 +10,6 @@ import 'package:grad_snap/pages/vendor_catalog_page.dart';
 import 'package:grad_snap/pages/booking_page.dart'; // IMPORT BOOKING PAGE
 import 'package:grad_snap/models/user_model.dart';
 import 'package:grad_snap/models/booking_model.dart'; // IMPORT BOOKING MODEL
-import 'package:grad_snap/services/notification_service.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -24,7 +23,6 @@ import 'providers/vendor_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

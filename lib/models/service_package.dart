@@ -1,4 +1,3 @@
-// lib/models/service_package.dart
 import 'dart:convert';
 
 class ServicePackage {
@@ -12,6 +11,8 @@ class ServicePackage {
   final String? imageUrl;
   final bool isActive;
   final DateTime createdAt;
+  final String? vendorType; // TAMBAHKAN INI
+  final String? vendorName;  // TAMBAHKAN INI
 
   ServicePackage({
     required this.id,
@@ -24,6 +25,8 @@ class ServicePackage {
     this.imageUrl,
     this.isActive = true,
     required this.createdAt,
+    this.vendorType,     // TAMBAHKAN
+    this.vendorName,     // TAMBAHKAN
   });
 
   factory ServicePackage.fromJson(Map<String, dynamic> json) {
@@ -41,7 +44,6 @@ class ServicePackage {
       }
     }
 
-    // Handle price yang bisa berupa String atau num
     double priceValue;
     final priceData = json['price'];
     if (priceData is num) {
@@ -65,9 +67,10 @@ class ServicePackage {
       createdAt: json['created_at'] != null 
           ? DateTime.parse(json['created_at']) 
           : DateTime.now(),
+      vendorType: json['vendor_type'],      // TAMBAHKAN - dari join table
+      vendorName: json['vendor_name'],      // TAMBAHKAN - dari join table
     );
   }
-
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -94,6 +97,8 @@ class ServicePackage {
     String? imageUrl,
     bool? isActive,
     DateTime? createdAt,
+    String? vendorType,
+    String? vendorName,
   }) {
     return ServicePackage(
       id: id ?? this.id,
@@ -106,8 +111,13 @@ class ServicePackage {
       imageUrl: imageUrl ?? this.imageUrl,
       isActive: isActive ?? this.isActive,
       createdAt: createdAt ?? this.createdAt,
+      vendorType: vendorType ?? this.vendorType,
+      vendorName: vendorName ?? this.vendorName,
     );
   }
 
   String get formattedPrice => 'Rp ${price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}';
+  
+  bool get isMUA => vendorType == 'mua';
+  bool get isPhotographer => vendorType == 'photographer';
 }
