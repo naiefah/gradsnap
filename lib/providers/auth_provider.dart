@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:io';
 import '../models/user_model.dart';
+// AuthProvider - Mengelola autentikasi Google Sign-In dan session dengan SharedPreferences
 
 class AuthProvider extends ChangeNotifier {
   final firebase_auth.FirebaseAuth _auth = firebase_auth.FirebaseAuth.instance;
@@ -476,3 +477,4 @@ class AuthProvider extends ChangeNotifier {
   bool get isPhotographer => _appUser?.isPhotographer ?? false;
   bool get isAdmin => _appUser?.isAdmin ?? false;
 }
+// AuthProvider - Mengelola autentikasi Google Sign-In dan session
