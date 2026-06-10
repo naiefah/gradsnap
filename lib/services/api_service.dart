@@ -413,3 +413,4 @@ class ApiService {
     }
   }
 }
+// API Service - HTTP requests dengan async/await, UI tidak freeze
