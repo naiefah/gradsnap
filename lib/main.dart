@@ -115,3 +115,4 @@ class GradSnapApp extends StatelessWidget {
     );
   }
 }
+// MultiProvider untuk state management global
