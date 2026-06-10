@@ -121,3 +121,4 @@ class ServicePackage {
   bool get isMUA => vendorType == 'mua';
   bool get isPhotographer => vendorType == 'photographer';
 }
+// Model untuk Service Package
